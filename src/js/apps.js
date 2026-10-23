@@ -39,9 +39,22 @@
         }), 8000, 'App list');
     }
 
+    // Some apps refuse a plain launch but open through an app control aimed at their id.
     function launch(appId) {
         return withTimeout(new Promise(function (resolve, reject) {
-            tizen.application.launch(appId, resolve, reject);
+            function viaAppControl(firstError) {
+                try {
+                    var control = new tizen.ApplicationControl('http://tizen.org/appcontrol/operation/default', null, null, null, null);
+                    tizen.application.launchAppControl(control, appId, resolve, function (err) { reject(err || firstError); });
+                } catch (e) {
+                    reject(firstError || e);
+                }
+            }
+            try {
+                tizen.application.launch(appId, resolve, viaAppControl);
+            } catch (e) {
+                viaAppControl(e);
+            }
         }), 8000, 'Launch');
     }
 

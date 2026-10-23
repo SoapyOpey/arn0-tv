@@ -45,6 +45,11 @@ window.LAUNCHER_CONFIG = {
         wallpaper: null
     },
 
+    // Evening dimming: a dark layer over the wallpaper and the screen saver photos between these
+    // times (TV clock, 24-hour; may cross midnight). Tiles and text stay bright. On/off is also
+    // in Settings → Screen saver.
+    night: { enabled: true, from: '20:00', to: '06:00' },
+
     /*
      * EXPERIMENTAL navigation sound. Synthesised, so there is no audio file. `move` plays when
      * focus changes, `edge` when it cannot (the end of a row). Tune by ear in the browser

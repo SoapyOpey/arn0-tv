@@ -7,5 +7,7 @@
  * restating the rest of it. Arrays (apps, inputs) replace the default wholesale.
  */
 window.LAUNCHER_LOCAL = {
+    // night: { from: '21:00', to: '07:00' },
+
     // locale: 'fr-FR',
 };

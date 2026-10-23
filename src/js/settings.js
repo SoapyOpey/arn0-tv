@@ -306,6 +306,8 @@
             blocks.push({ title: 'Change photo every', key: 'photoEvery', options: optionPairs(Screensaver.PHOTO_EVERY) });
         }
         blocks.push({ title: 'Go dark after', key: 'dark', options: optionPairs(Screensaver.DARK_AFTER) });
+        var n = Prefs.get().night;
+        blocks.push({ title: 'Evening dimming (' + n.from + '–' + n.to + ')', key: 'night', options: [[true, 'On'], [false, 'Off']] });
         return blocks;
     }
 
@@ -322,7 +324,8 @@
             block.appendChild(el('h2', '', b.title));
             var chips = el('div', 'chips');
             b.options.forEach(function (o) {
-                chips.appendChild(chip(o[1], p[b.key] === o[0], { key: b.key, value: o[0] }));
+                var current = b.key === 'night' ? Prefs.get().night.enabled : p[b.key];
+                chips.appendChild(chip(o[1], current === o[0], { key: b.key, value: o[0] }));
             });
             block.appendChild(chips);
             body.appendChild(block);
@@ -341,8 +344,14 @@
             Screensaver.open();
             return;
         }
-        Prefs.get().screensaver[item.key] = item.value;
-        Prefs.save();
+        if (item.key === 'night') {
+            Prefs.get().night.enabled = item.value;
+            Prefs.save();
+            Night.apply();
+        } else {
+            Prefs.get().screensaver[item.key] = item.value;
+            Prefs.save();
+        }
         // Otherwise a countdown that began before the change could fire straight away.
         Screensaver.poke();
         renderScreensaver();

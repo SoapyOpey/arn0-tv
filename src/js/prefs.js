@@ -35,6 +35,11 @@
                 font: 'manrope',        // see Appearance.FONTS
                 names: 'always'         // app names under tiles: 'always' | 'focused' | 'never'
             },
+            night: {
+                enabled: cfg.night ? cfg.night.enabled !== false : true,
+                from: cfg.night && cfg.night.from || '20:00',   // TV clock, 24-hour
+                to: cfg.night && cfg.night.to || '06:00'
+            },
             home: null,                 // [{ id, label, brand }] once edited; null = config.js apps
             inputs: null                // [{ hdmi, label, brand, method, hidden }] once edited; null = config.js
         };
@@ -56,6 +61,7 @@
                 merge(prefs.wallpaper, saved.wallpaper);
                 merge(prefs.screensaver, saved.screensaver);
                 merge(prefs.appearance, saved.appearance);
+                merge(prefs.night, saved.night);
                 if (Array.isArray(saved.home) && saved.home.length) prefs.home = saved.home;
                 if (Array.isArray(saved.inputs)) prefs.inputs = saved.inputs;
             } else {

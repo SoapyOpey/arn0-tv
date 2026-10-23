@@ -51,12 +51,23 @@
     function later(fn) { setTimeout(fn, 60); }
 
     window.tizen = {
+        ApplicationControl: function (operation, uri, mime, category, data) {
+            this.operation = operation; this.uri = uri; this.mime = mime; this.category = category; this.data = data;
+        },
         application: {
             getAppsInfo: function (ok) { later(function () { ok(apps.slice()); }); },
             launch: function (id, ok, err) {
                 console.log('[mock] launch', id);
                 if (id === 'rJeHak5zRg.Spotify') {
                     later(function () { err({ name: 'NotFoundError', message: 'Mock launch failure' }); });
+                    return;
+                }
+                later(ok);
+            },
+            launchAppControl: function (control, id, ok, err) {
+                console.log('[mock] launchAppControl', control.operation, id);
+                if (id === 'rJeHak5zRg.Spotify') {
+                    later(function () { err({ name: 'NotFoundError', message: 'Mock app control failure' }); });
                     return;
                 }
                 later(ok);

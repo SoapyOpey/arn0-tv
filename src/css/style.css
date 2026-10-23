@@ -86,6 +86,21 @@ html, body {
     will-change: transform;
 }
 
+/* Evening dimming (js/night.js): a plain black layer over the photo only, so tiles and text stay bright. */
+.night-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1920px;
+    height: 1080px;
+    background: #000;
+    opacity: 0;
+    transition: opacity 3000ms linear;
+    pointer-events: none;
+}
+
+html.night .night-layer { opacity: 0.45; }
+
 .view {
     position: absolute;
     top: 0;
