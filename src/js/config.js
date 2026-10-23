@@ -46,27 +46,10 @@ window.LAUNCHER_CONFIG = {
     },
 
     /*
-     * Weather shown in the screen saver's corner, from Open-Meteo. No API key and nothing to
-     * keep secret, so this is the whole setup: put your own coordinates here (two decimals is
-     * plenty, and is also about as precise as you want a public request to be). Leave them null
-     * and the widget never appears.
-     *
-     * There is no Settings page for this on purpose — the TV does not move, and coordinates are
-     * not something you type with a remote.
-     */
-    weather: {
-        latitude: null,
-        longitude: null,
-        unit: 'celsius'         // 'celsius' | 'fahrenheit'
-    },
-
-    /*
      * EXPERIMENTAL navigation sound. Synthesised, so there is no audio file. `move` plays when
      * focus changes, `edge` when it cannot (the end of a row). Tune by ear in the browser
      * preview; `volume` is 0–1 and sits on top of the TV's own volume.
-     *
-     * Whether this is worth keeping depends on the TV's audio latency: run
-     * "Sound: report audio latency" in the Lab screen. Set enabled to false to silence it.
+     * Set enabled to false to silence it.
      */
     sound: {
         enabled: true,
@@ -81,21 +64,17 @@ window.LAUNCHER_CONFIG = {
         move: { freq: 880, ms: 38, type: 'triangle' },
         edge: { freq: 200, ms: 70, type: 'sine' },
         select: { freq: 1320, ms: 55, type: 'triangle' }
-    },
-
-    // Development only: where the Lab screen sends its logs (npm run devlog on your computer).
-    // null disables it; set it to http://<your-computer-ip>:8099/log while debugging.
-    devLogUrl: null
+    }
 };
 
 /*
  * Local overrides from js/config.local.js, which is gitignored and loaded just before this file.
- * That is where values specific to one TV belong — coordinates, a devlog address — so this file
+ * That is where values specific to one TV belong, so this file
  * can stay in the repository with nulls in it. Nothing to strip before a push, nothing to put
  * back before a build, and the overlay reaches the browser preview and the .wgt alike.
  *
- * Merged one level deep, so a local file can set weather.latitude without restating the rest of
- * the block. Arrays (apps, inputs) and plain values replace the default outright.
+ * Merged one level deep, so a local file can set one value in a block without restating the rest.
+ * Arrays (apps, inputs) and plain values replace the default outright.
  */
 (function () {
     'use strict';

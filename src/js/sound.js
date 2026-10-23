@@ -9,8 +9,7 @@
  * silent: a launcher that is someone's Home button must not break because audio did.
  *
  * EXPERIMENTAL. Latency is the open question — if the TV's audio path delays the click much past
- * ~60 ms it will feel detached from the remote and should be turned off. Measure it from the Lab
- * screen ("Sound: report audio latency") before deciding to keep this.
+ * ~60 ms it will feel detached from the remote and should be turned off.
  */
 (function () {
     'use strict';
@@ -133,96 +132,11 @@
         }
     }
 
-    // ---------- Lab diagnostics
-
-    function report() {
-        var log = function (m) { DevLog.log(m); };
-        var Ctor = window.AudioContext || window.webkitAudioContext;
-        if (!Ctor) {
-            log('Web Audio: NOT AVAILABLE on this engine');
-            return;
-        }
-        log('Web Audio: available (' +
-            (window.AudioContext ? 'AudioContext' : 'webkitAudioContext') + ')');
-
-        var ac = context();
-        if (!ac) {
-            log('Web Audio: context could not be created');
-            return;
-        }
-        log('State on creation: ' + ac.state +
-            (ac.state === 'suspended' ? '  (needs resume from a key press)' : ''));
-        log('Sample rate: ' + ac.sampleRate + ' Hz');
-
-        /*
-         * These are what decide whether a navigation click is usable. baseLatency is the engine's
-         * own buffering; outputLatency includes the path to the speakers, which on a TV can be
-         * long. Either may be undefined on older engines, which is itself worth knowing.
-         */
-        var base = ac.baseLatency;
-        var out = ac.outputLatency;
-        log('baseLatency: ' + (base === undefined ? 'not reported' : (base * 1000).toFixed(1) + ' ms'));
-        log('outputLatency: ' + (out === undefined ? 'not reported' : (out * 1000).toFixed(1) + ' ms'));
-
-        var total = (base || 0) + (out || 0);
-        if (base === undefined && out === undefined) {
-            log('Verdict: engine reports no latency figures — judge it by ear instead');
-        } else if (total * 1000 > 60) {
-            log('Verdict: about ' + (total * 1000).toFixed(0) +
-                ' ms before it reaches the speakers — likely to feel detached from the remote');
-        } else {
-            log('Verdict: about ' + (total * 1000).toFixed(0) + ' ms — should feel attached to the press');
-        }
-
-        if (ac.resume) {
-            ac.resume().then(function () {
-                log('After resume(): ' + ac.state);
-            }, function (err) {
-                log('resume() rejected: ' + DevLog.errorText(err));
-            });
-        }
-    }
-
-    // Evenly spaced clicks: is each one crisp, and are they all the same?
-    function spaced() {
-        DevLog.log('Sound: 10 clicks, 500 ms apart — listen for consistency');
-        var n = 0;
-        var timer = setInterval(function () {
-            play('move');
-            if (++n >= 10) clearInterval(timer);
-        }, 500);
-    }
-
-    // What holding an arrow key down would sound like.
-    function burst() {
-        DevLog.log('Sound: 25 clicks as fast as minGapMs allows — listen for machine-gunning');
-        var n = 0;
-        var timer = setInterval(function () {
-            play('move');
-            if (++n >= 25) clearInterval(timer);
-        }, 30);
-    }
-
-    function voices() {
-        DevLog.log('Sound: move, then edge, then select');
-        play('move');
-        setTimeout(function () { play('edge'); }, 450);
-        setTimeout(function () { play('select'); }, 900);
-    }
-
     window.Sound = {
         play: play,
         preview: function () { play('move', true); },
         enabled: enabled,
         presetOptions: presetOptions,
-        presetLabel: function () { return selectedPreset().label || 'Custom'; },
-        actions: function () {
-            return [
-                { label: 'Sound: report audio latency', run: report },
-                { label: 'Sound: 10 clicks, 500 ms apart', run: spaced },
-                { label: 'Sound: rapid burst (held key)', run: burst },
-                { label: 'Sound: hear all three voices', run: voices }
-            ];
-        }
+        presetLabel: function () { return selectedPreset().label || 'Custom'; }
     };
 })();

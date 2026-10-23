@@ -1,4 +1,4 @@
-/* Home, All apps and Lab screens; app list loading, launching and HDMI inputs. */
+/* Home and All apps screens; app list loading, launching and HDMI inputs. */
 (function () {
     'use strict';
 
@@ -207,35 +207,6 @@
         $('all-count').textContent = items.length + ' apps';
     }
 
-    function renderLab() {
-        var actions = [
-            { label: 'Send installed app list to log', run: labDumpApps },
-            { label: 'Read inputs', run: labReadInputs },
-            { label: 'Open Samsung TV viewer only', run: function () { runLogged('Open TV viewer', Inputs.openViewer()); } }
-        ];
-        if (window.Sound) actions = actions.concat(Sound.actions());
-        if (window.Weather) actions = actions.concat(Weather.actions());
-        if (window.RenderProbe) actions = actions.concat(RenderProbe.actions());
-        if (window.PlatformProbe) actions = actions.concat(PlatformProbe.actions());
-        inputs().forEach(function (input) {
-            var item = { kind: 'input', hdmi: input.hdmi, label: input.label };
-            var name = input.label + ' (HDMI ' + input.hdmi + ')';
-            actions.push({ label: name + ': switch + viewer', run: function () { openInput(item, 'switch+viewer'); } });
-            actions.push({ label: name + ': switch only', run: function () { openInput(item, 'switch'); } });
-            actions.push({ label: name + ': inside launcher', run: function () { openInput(item, 'inapp'); } });
-        });
-        var list = $('lab-list');
-        list.innerHTML = '';
-        actions.forEach(function (a) {
-            var li = el('li', '', a.label);
-            li._item = { kind: 'lab', run: a.run };
-            list.appendChild(li);
-        });
-        DevLog.onLine(function () {
-            $('lab-log').textContent = DevLog.lines().slice(-26).join('\n');
-        });
-    }
-
     // ---------- Actions
 
     function runLogged(what, promise) {
@@ -277,23 +248,6 @@
         Inputs.hide().catch(function (err) { log('Hide input failed: ' + DevLog.errorText(err)); });
     }
 
-    function labDumpApps() {
-        runLogged('App list', Apps.getInstalledApps()).then(function (apps) {
-            log('apps: ' + apps.length + ' total, ' + apps.filter(function (a) { return a.show; }).length + ' with show=true',
-                apps.map(Apps.describe));
-            UI.toast('Sent ' + apps.length + ' apps to the log');
-        }).catch(function () {});
-    }
-
-    function labReadInputs() {
-        runLogged('Inputs', Inputs.sources()).then(function (info) {
-            var fmt = function (list) { return (list || []).map(Inputs.describeSource).join(', ') || 'none'; };
-            log('connected: ' + fmt(info.connected));
-            log('disconnected: ' + fmt(info.disconnected));
-            log('current: ' + Inputs.describeSource(Inputs.current()));
-        }).catch(function () {});
-    }
-
     function nextWallpaper() {
         var w = Wallpaper.next();
         if (w) UI.toast(w.title + (w.credit ? ' · ' + w.credit : ''));
@@ -305,14 +259,10 @@
             UI.show(view === 'all' ? 'home' : 'all');
         } else if (k === KEY.GREEN || k === KEY.G) {
             if (view === 'home') nextWallpaper();
-        } else if (k === KEY.BLUE || k === KEY.B) {
-            UI.show(view === 'lab' ? 'home' : 'lab');
         } else if (k === KEY.YELLOW || k === KEY.Y) {
             if (view === 'all') {
                 state.showEverything = !state.showEverything;
                 UI.show('all', { back: true });
-            } else if (view === 'home' && window.RunnerGame) {
-                RunnerGame.open();
             } else return false;
         } else {
             return false;
@@ -349,29 +299,6 @@
     }
 
     var listeners = [];
-    /*
-     * Hidden game code: Left and Right alternating three times.
-     *
-     * Two properties matter on a remote. It is matched against the tail of the last few keys,
-     * not with a position counter, because a held key repeats and one extra press would
-     * otherwise reset progress so the code could never complete. And it alternates rather than
-     * repeating a key, because both auto-repeat and sweeping along a row produce runs of the
-     * same key — a code made of runs fires by accident during ordinary browsing.
-     */
-    var gameCode = [KEY.LEFT, KEY.RIGHT, KEY.LEFT, KEY.RIGHT, KEY.LEFT, KEY.RIGHT];
-    var recentKeys = [];
-
-    function gameCodeEntered(k) {
-        recentKeys.push(k);
-        if (recentKeys.length > gameCode.length) recentKeys.shift();
-        if (recentKeys.length < gameCode.length) return false;
-        for (var i = 0; i < gameCode.length; i++) {
-            if (recentKeys[i] !== gameCode[i]) return false;
-        }
-        recentKeys.length = 0;
-        return true;
-    }
-
     function setApps(apps) {
         var sig = apps.map(function (a) { return a.id + '|' + a.name + '|' + a.show; }).join(',');
         if (sig === state.appsSig) return;
@@ -430,13 +357,6 @@
             activate: launchApp,
             hints: [['OK', 'Open'], ['Back', 'Home']]
         });
-
-        UI.register('lab', {
-            el: $('lab'),
-            rows: function () { return UI.children($('lab-list')).map(function (li) { return [li]; }); },
-            activate: function (item) { item.run(); },
-            hints: [['OK', 'Run'], ['Back', 'Home']]
-        });
     }
 
     function init() {
@@ -448,17 +368,11 @@
                 if (k === KEY.BACK || k === KEY.ESC || k === KEY.BACKSPACE) exitTvMode();
                 return true;
             }
-            if (!UI.isVisible('home')) { recentKeys.length = 0; return false; }
-            if (gameCodeEntered(k)) {
-                if (window.RunnerGame) RunnerGame.open(true);
-                return true;
-            }
             return false;
         });
         Appearance.apply();
         updateClock();
         setInterval(updateClock, 10000);
-        renderLab();
         var cached = readCache();
         if (cached && cached.length) setApps(cached);
         else renderHome();
@@ -492,7 +406,6 @@
         // An HDMI input shown inside the launcher: no screen saver over it.
         tvMode: function () { return state.tvMode; },
         refreshInputStatus: refreshInputStatus,
-        renderLab: renderLab,
         updateClock: updateClock,
         reloadApps: loadApps,
         miniTile: miniTile,

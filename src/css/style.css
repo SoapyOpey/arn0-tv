@@ -2,7 +2,7 @@
  * Fixed 1920x1080 stage.
  *
  * Performance rules for TV hardware, measured on the reference Q70B (Chromium 85, 4 cores, 2 GB)
- * with the Lab render probe rather than assumed. Baseline for a focus walk along eight tiles is
+ * with the author's render probe rather than assumed. Baseline for a focus walk along eight tiles is
  * 59.5 fps / 16.8 ms, zero dropped frames:
  *
  *   - Blurred box-shadows are FREE. Eight tiles at `0 40px 100px` measured 59.5 fps and zero
@@ -15,7 +15,7 @@
  * Still assumed rather than measured: no filters or masks; no rounded clipping (overflow: hidden
  * + border-radius) on tiles; only transform animates, on elements with their own layer. The
  * engine does report `filter: blur` and `backdrop-filter` as supported, so if either becomes
- * worth having, measure it first — the probe is in the Lab screen.
+ * worth having, measure it first.
  *
  * This engine lacks `inset`, `aspect-ratio`, `overflow: clip`, the individual transform
  * properties, `color-mix()`, container queries and `:has()`. Grid, gap, sticky and `clamp()` work.
@@ -700,48 +700,6 @@ h1, h2 {
     font: 600 34px var(--font);
 }
 
-/* ---------- Lab ---------- */
-
-.lab-list {
-    position: absolute;
-    top: 220px;
-    left: var(--edge);
-    width: 860px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.lab-list li {
-    padding: 10px 24px;
-    margin-bottom: 4px;
-    border-radius: 10px;
-    font-size: 26px;
-    color: var(--muted);
-}
-
-.lab-list li.focused {
-    background: var(--fg);
-    color: var(--bg);
-}
-
-.lab-log {
-    position: absolute;
-    top: 220px;
-    bottom: 120px;
-    left: 1040px;
-    right: var(--edge);
-    margin: 0;
-    padding: 24px;
-    border-radius: 16px;
-    background: rgba(0, 0, 0, 0.45);
-    font: 20px/1.45 Menlo, "Courier New", monospace;
-    color: #cfd3da;
-    white-space: pre-wrap;
-    word-break: break-all;
-    overflow: hidden;
-}
-
 /* ---------- Footer, toast ---------- */
 
 footer {
@@ -825,57 +783,11 @@ html.preview, html.preview body {
 }
 
 /*
- * Render probe stage (Lab only). Deliberately breaks the performance rules above: that is the
- * point — these styles exist to measure what breaking them costs on this TV.
- */
-/* Chromium 85 has no `inset` shorthand, so the sides are set individually. */
-.probe-stage {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 60;
-    background: #07080c;
-}
-
-.probe-glow {
-    position: absolute;
-    width: 1100px;
-    height: 1100px;
-    background: radial-gradient(circle, rgba(120, 140, 255, 0.5), rgba(120, 140, 255, 0) 70%);
-}
-
-.probe-glow-0 { top: -380px; left: 140px; }
-.probe-glow-1 { top: 180px; left: 820px; }
-.probe-glow-2 { top: -220px; left: 1400px; }
-
-.probe-row {
-    position: absolute;
-    top: 420px;
-    left: var(--edge);
-    display: flex;
-    gap: 36px;
-}
-
-.probe-tile {
-    width: 300px;
-    height: 170px;
-    border-radius: 18px;
-    background: linear-gradient(140deg, #d8232a, #8c1419);
-}
-
-/* The expensive kind: a large blur radius, as used throughout the proposed redesign. */
-.probe-shadow { box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6); }
-
-.probe-focus { box-shadow: 0 0 0 5px var(--ring), 0 40px 100px rgba(0, 0, 0, 0.6); }
-
-/*
  * Screen saver.
  *
  * Only `transform` and `opacity` are animated, both on elements with their own layer, so the
  * drift and the crossfade should be composited rather than repainted. That follows the rule at
- * the top of this file but is not separately measured: the Lab probe times rAF intervals while
+ * the top of this file but is not separately measured: the author's probe times rAF intervals while
  * JavaScript mutates the stage, and these transitions are set once and then run without the
  * main thread, which that probe would report as a clean 60 fps whether or not the panel keeps
  * up. Judge it by eye instead — Settings ▸ Screen saver ▸ Show it now, on the TV.
@@ -943,7 +855,6 @@ html.preview, html.preview body {
 .ss-clock {
     position: absolute;
     display: flex;
-    /* Bottom-aligned so the weather detail and the date share a baseline. */
     align-items: flex-end;
     gap: 36px;
     transition: transform 1200ms ease-out;
@@ -958,12 +869,6 @@ html.preview, html.preview body {
     text-align: right;
 }
 
-/* Only drawn when there is a reading to divide it from. */
-.ss-clock.with-weather .ss-clock-main {
-    border-left: 1px solid rgba(220, 224, 232, 0.22);
-    padding-left: 36px;
-}
-
 .ss-time {
     font-size: 72px;
     font-weight: 300;
@@ -975,38 +880,6 @@ html.preview, html.preview body {
     margin-top: 10px;
     font-size: 30px;
     color: rgba(220, 224, 232, 0.75);
-}
-
-.ss-weather {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.ss-wx-now {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.ss-wx-icon svg {
-    display: block;
-    width: 44px;
-    height: 48px;
-    color: rgba(243, 244, 246, 0.9);
-}
-
-.ss-wx-temp {
-    font-size: 46px;
-    font-weight: 300;
-    line-height: 1;
-    color: rgba(243, 244, 246, 0.95);
-}
-
-.ss-wx-detail {
-    margin-top: 10px;
-    font-size: 26px;
-    color: rgba(220, 224, 232, 0.6);
 }
 
 .ss-dark {

@@ -32,10 +32,6 @@ signature*.xml
 # so nothing has to be stripped before a push. See src/js/config.local.example.js.
 src/js/config.local.js
 
-# native helper build output (device-specific; build it yourself)
-native/**/bin/
-native/**/obj/
-native/build/
 
 # Easter-egg assets: personal photos and a music track. Kept out of git deliberately —
 # they ship only in local builds, and runner-game.js degrades to a notice without them.

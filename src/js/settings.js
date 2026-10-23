@@ -115,7 +115,7 @@
             { label: 'Navigation sound', value: soundSummary(), run: function () { UI.show('sound-settings'); } },
             { label: 'Screen saver', value: screensaverSummary(), run: function () { UI.show('screensaver-settings'); } },
             { label: 'Samsung Home', value: 'Smart Hub and TV settings', run: openSamsungHome },
-            { label: 'Advanced', value: 'Refresh, reset, Lab', run: function () { UI.show('advanced'); } }
+            { label: 'Advanced', value: 'Refresh and reset', run: function () { UI.show('advanced'); } }
         ];
     }
 
@@ -634,14 +634,6 @@
                 }
             }
         ];
-        if (window.LAUNCHER_CONFIG.devLogUrl) {
-            entries.push({
-                label: 'Export settings', value: 'Sends them to the Mac log', run: function () {
-                    DevLog.log('Settings export', Prefs.get());
-                    UI.toast('Settings sent to the Mac log');
-                }
-            });
-        }
         entries.push({
             label: 'Reset all settings', value: 'Back to the defaults', run: function () {
                 UI.menu('Reset all settings?', [
@@ -655,7 +647,6 @@
                 ]);
             }
         });
-        entries.push({ label: 'Lab', value: 'Developer tests', run: function () { UI.show('lab'); } });
         return entries;
     }
 

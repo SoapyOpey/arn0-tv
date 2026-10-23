@@ -64,8 +64,8 @@ This is a Tizen TV launcher (see README.md). Work in the browser preview only.
 Do: edit src/js/config.js, src/js/brands.js and src/css/style.css; run `npm run preview`
 and check the result; keep the 1920x1080 stage and remote-only navigation intact.
 
-Do not: connect to a TV, run sdb, sign or install a package, or touch anything
-under native/. Do not change Home or startup behaviour.
+Do not: connect to a TV, run sdb, sign or install a package. Do not change Home or
+startup behaviour.
 ```
 
 TV work is different in kind: it needs a machine on the same network as the TV, so an agent that

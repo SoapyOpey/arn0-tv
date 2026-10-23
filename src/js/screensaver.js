@@ -3,7 +3,7 @@
  * on Home. Any key closes it, and that press does nothing else.
  *
  * Adapted from a design mockup rather than ported from it. The mockup's backdrop was nine
- * radial-gradients over a linear-gradient — the exact shape the Lab render probe measured at
+ * radial-gradients over a linear-gradient — the exact shape the author's render probe measured at
  * 4.6 fps with 88 of 90 frames dropped (see the header of css/style.css). Here a photo fills
  * that role, the one gradient left is static and painted once, and everything that moves does
  * so through `transform` and `opacity`, which the compositor animates with no JavaScript per
@@ -222,7 +222,7 @@
         $('ss-clock').style.transform = shift;
     }
 
-    // Swaps the position class without touching the others, which now include `with-weather`.
+    // Swaps the position class without touching the others.
     function setClockPos(n) {
         var el = $('ss-clock');
         for (var i = 0; i < CLOCK_POSITIONS; i++) el.classList.remove('pos-' + i);
@@ -233,17 +233,6 @@
         clockPos = (clockPos + 1) % CLOCK_POSITIONS;
         setClockPos(clockPos);
         nextClockMoveAt = Date.now() + CLOCK_MOVE_MS;
-    }
-
-    // Hidden outright when there is no usable reading: see the note on staleness in weather.js.
-    function renderWeather() {
-        var w = window.Weather && Weather.current();
-        $('ss-clock').classList.toggle('with-weather', !!w);
-        $('ss-weather').classList.toggle('hidden', !w);
-        if (!w) return;
-        $('ss-wx-icon').innerHTML = w.icon;
-        $('ss-wx-temp').textContent = w.temp;
-        $('ss-wx-detail').textContent = w.detail;
     }
 
     // ---------- Open, tick, close
@@ -276,9 +265,6 @@
 
         UI.show('screensaver');
         updateClock();
-        // Shows the cached reading at once, and asks for a new one only if the hour is up.
-        renderWeather();
-        if (window.Weather) Weather.refresh();
         var w = photoAt(photoIndex);
         caption(w);
         showPhoto(w);
@@ -350,12 +336,6 @@
 
     function init() {
         layers = [$('ss-photo-a'), $('ss-photo-b')];
-        // A reading that lands mid-session should appear without waiting for the next photo.
-        if (window.Weather) {
-            Weather.onUpdate(function () {
-                if (open) renderWeather();
-            });
-        }
         UI.register('screensaver', {
             el: $('screensaver'),
             hints: [],
