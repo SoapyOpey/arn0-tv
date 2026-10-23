@@ -1,5 +1,5 @@
 #!/bin/sh
-# Packages src/ into dist/arn0-launcher.wgt (unsigned; Apps2Samsung signs it on install).
+# Packages src/ into dist/hjem-launcher.wgt (unsigned; Apps2Samsung signs it on install).
 set -eu
 cd "$(dirname "$0")/.."
 
@@ -10,9 +10,9 @@ cd "$(dirname "$0")/.."
 node scripts/build-marks.mjs
 
 mkdir -p dist
-rm -f dist/arn0-launcher.wgt
-(cd src && zip -q -r -X ../dist/arn0-launcher.wgt . -x '*.DS_Store' -x '.*' -x 'img/marks/*' \
+rm -f dist/hjem-launcher.wgt
+(cd src && zip -q -r -X ../dist/hjem-launcher.wgt . -x '*.DS_Store' -x '.*' -x 'img/marks/*' \
  )
 
-echo "Built dist/arn0-launcher.wgt"
-unzip -l dist/arn0-launcher.wgt
+echo "Built dist/hjem-launcher.wgt"
+unzip -l dist/hjem-launcher.wgt

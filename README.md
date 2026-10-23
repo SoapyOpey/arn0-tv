@@ -80,7 +80,7 @@ launcher. Installing is reversible by uninstalling.
 
 ```sh
 npm run preview      # browser preview on :8080
-npm run build        # -> dist/arn0-launcher.wgt (needs zip; Git Bash on Windows has none)
+npm run build        # -> dist/hjem-launcher.wgt (needs zip; Git Bash on Windows has none)
 npm run build:win    # the same package via Windows' own tar.exe
 node scripts/prepare-wallpapers.mjs <folder>   # regenerate wallpapers from your photos (macOS: uses sips)
 ```

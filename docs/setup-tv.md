@@ -30,7 +30,7 @@ field and restart the TV. A fixed address for the computer in the router avoids 
 ## 2. Build the package
 
 ```sh
-npm run build          # Git Bash with zip -> dist/arn0-launcher.wgt
+npm run build          # Git Bash with zip -> dist/hjem-launcher.wgt
 npm run build:win      # Windows without zip; uses the built-in tar.exe
 ```
 
@@ -40,13 +40,15 @@ The package is unsigned on purpose; the installer signs it for your TV.
 
 Use [Apps2Samsung](https://github.com/Apps2Samsung/Apps2Samsung) (older versions are called
 Jellyfin2Samsung; it is the same program). Pick **Custom WGT** in the Release list, point it at
-`dist/arn0-launcher.wgt`, select the TV and install. The first time it opens a Samsung account
+`dist/hjem-launcher.wgt`, select the TV and install. The first time it opens a Samsung account
 sign-in to create a free developer certificate for your TV.
 
 The program makes a fresh certificate on each run and therefore updates by **uninstalling the
-launcher and installing it again**, which clears the settings saved on the TV. If it fails to
-notice the existing install, the TV refuses the new package with "Author certificate not match":
-remove **Hjem** from the TV's app list (Apps → App Settings → Hjem → Delete) and install again.
+launcher and installing it again**, which clears the settings saved on the TV. It finds the
+existing install by **title**, using the part of the package file name before the first dash, so
+the file is called `hjem-launcher.wgt` to match the app name **Hjem**. Rename the app and you must
+rename the file. If it still fails with "Author certificate not match", remove **Hjem** from the
+TV's app list (Apps → App Settings → Hjem → Delete) and install again.
 The program re-signs the file in `dist/` in place and may delete it afterwards; just build again.
 
 Then open **Hjem** from the TV's app list.
