@@ -405,7 +405,6 @@
         hdmiStatus: function () { return state.hdmi; },
         // An HDMI input shown inside the launcher: no screen saver over it.
         tvMode: function () { return state.tvMode; },
-        refreshInputStatus: refreshInputStatus,
         updateClock: updateClock,
         reloadApps: loadApps,
         miniTile: miniTile,

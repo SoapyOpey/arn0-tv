@@ -135,7 +135,6 @@
     window.Sound = {
         play: play,
         preview: function () { play('move', true); },
-        enabled: enabled,
         presetOptions: presetOptions,
         presetLabel: function () { return selectedPreset().label || 'Custom'; }
     };

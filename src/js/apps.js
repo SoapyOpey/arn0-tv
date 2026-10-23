@@ -119,20 +119,11 @@
         };
     }
 
-    function describe(app) {
-        return {
-            id: app.id, name: app.name, show: app.show, packageId: app.packageId,
-            categories: app.categories ? Array.prototype.slice.call(app.categories) : [],
-            iconPath: app.iconPath, version: app.version, consumer: isConsumer(app)
-        };
-    }
-
     window.Apps = {
         getInstalledApps: getInstalledApps,
         launchable: launchable,
         curated: curated,
         allSorted: allSorted,
-        describe: describe,
         launch: launch,
         withTimeout: withTimeout
     };

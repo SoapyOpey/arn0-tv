@@ -76,12 +76,10 @@
     }
 
     window.Inputs = {
-        sources: sources,
         hdmiStatus: hdmiStatus,
         current: current,
         describeSource: describeSource,
         open: open,
-        hide: hide,
-        openViewer: openViewer
+        hide: hide
     };
 })();

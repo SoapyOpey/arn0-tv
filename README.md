@@ -135,7 +135,7 @@ Saved on the TV in `localStorage`. They survive restarts and in-place updates, n
 - **Apps on Home** — OK on an app opens Move / Remove; OK on the right-hand slot adds one.
 - **Consoles** — per console: rename (on-screen keyboard), HDMI port, logo, how it opens, hide,
   reorder, remove; plus add a console.
-- **Appearance** — 24/12-hour clock, date shown/hidden, date language (English, Español, Français),
+- **Appearance** — 24/12-hour clock, date shown/hidden, date language (Norsk, English, Español, Français),
   font, app names (always / when selected / never).
 - **Navigation sound** — turn arrow-key sounds on or off, choose Soft, Warm or Bright, and preview
   the selected tone.

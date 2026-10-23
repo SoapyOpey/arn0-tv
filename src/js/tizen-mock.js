@@ -13,7 +13,7 @@
     }
 
     var apps = [
-        app('Arn0Lnchr0.Launcher', 'Arn0 Launcher'),
+        app('Arn0Lnchr0.Launcher', 'Hjem'),
         app('xvvl3S1TT1.TizenTubeStandalone', 'TizenTube'),
         app('com.samsung.tv.cobalt-yt', 'YouTube'),
         app('org.tizen.netflix-app', 'Netflix'),
@@ -22,17 +22,12 @@
         app('com.samsung.tv.aria-video', 'Apple TV'),
         app('rJeHak5zRg.Spotify', 'Spotify'),
         app('Jz7aUrV2Q4.Twitch', 'Twitch'),
-        app('E0P3lRI4H7.MYTF1', 'TF1+ : Streaming, TV en Direct'),
-        app('MovistarPl.MovistarPlus', 'Movistar Plus+'),
         app('PlexMedia0.Plex', 'Plex'),
         app('AprZAARz4r.Jellyfin', 'Jellyfin'),
         app('NrkTvApp00.NRKTV', 'NRK TV'),
         app('Tv2PlayApp.TV2Play', 'TV 2 Play'),
         app('HboMaxApp0.HBOMax', 'HBO Max'),
         app('ViaplayApp.Viaplay', 'Viaplay'),
-        app('DaznApp000.DAZN', 'DAZN'),
-        app('RtveTvApp0.RTVEPlay', 'RTVE Play'),
-        app('Atresplay0.atresplayer', 'atresplayer'),
         app('org.tizen.browser', 'Internet'),
         // Noise that the consumer filter should hide
         app('com.samsung.tv.ep-dataservice-app', 'ep-dataservice-app'),
@@ -43,8 +38,8 @@
     ];
 
     var sources = {
-        connected: [{ type: 'TV', number: 1 }, { type: 'HDMI', number: 2 }, { type: 'HDMI', number: 4 }],
-        disconnected: [{ type: 'HDMI', number: 1 }, { type: 'HDMI', number: 3 }]
+        connected: [{ type: 'TV', number: 1 }, { type: 'HDMI', number: 2 }, { type: 'HDMI', number: 3 }, { type: 'HDMI', number: 4 }],
+        disconnected: [{ type: 'HDMI', number: 1 }]
     };
     var currentSource = sources.connected[0];
 

@@ -357,11 +357,8 @@
         PHOTO_EVERY: PHOTO_EVERY,
         DARK_AFTER: DARK_AFTER,
         delay: delay,
-        photoEvery: photoEvery,
-        darkAfter: darkAfter,
         init: init,
         open: openSaver,
-        close: close,
         isOpen: function () { return open; },
         // Settings should not leave a countdown that started before the change.
         poke: function () { lastInput = Date.now(); }

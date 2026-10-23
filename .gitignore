@@ -28,20 +28,10 @@ signature*.xml
 .env
 .env.*
 
-# Per-TV config: coordinates, devlog address. config.js keeps the nulls and this overrides them,
-# so nothing has to be stripped before a push. See src/js/config.local.example.js.
+# Per-TV config, merged over config.js. See src/js/config.local.example.js.
 src/js/config.local.js
 
-
-# Easter-egg assets: personal photos and a music track. Kept out of git deliberately —
-# they ship only in local builds, and runner-game.js degrades to a notice without them.
-src/img/easter-egg/
-src/audio/
-
-# never publish a device baseline or a conversation transcript
-*-baseline.json
-original-*.json
-native-snapshot.json
+# never publish a conversation transcript
 *conversation*.pdf
 
 # local agent + editor settings

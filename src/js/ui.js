@@ -131,19 +131,6 @@
         setFocus(def.focusEl ? def.focusEl() : focusedEl());
     }
 
-    // Point generic focus at an element (e.g. after re-rendering).
-    function focusOn(target) {
-        var r = rows();
-        for (var i = 0; i < r.length; i++) {
-            var c = r[i].indexOf(target);
-            if (c >= 0) {
-                focus[current].r = i;
-                focus[current].c = c;
-            }
-        }
-        refresh();
-    }
-
     function centerX(e) {
         var b = e.getBoundingClientRect();
         return b.left + b.width / 2;
@@ -284,8 +271,6 @@
         show: show,
         back: back,
         refresh: refresh,
-        setFocus: setFocus,
-        focusOn: focusOn,
         resetScroll: resetScroll,
         // For state changes that redraw hints without switching view.
         refreshHints: function () { renderHints(views[current]); },

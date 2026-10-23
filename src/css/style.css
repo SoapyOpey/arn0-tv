@@ -728,10 +728,6 @@ footer {
     color: var(--faint);
 }
 
-#footer-left {
-    font-family: Menlo, "Courier New", monospace;
-}
-
 #toast {
     position: absolute;
     bottom: 110px;
