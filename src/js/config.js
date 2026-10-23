@@ -13,7 +13,6 @@
  */
 window.LAUNCHER_CONFIG = {
     apps: [
-        { match: 'chromecast', label: 'Chromecast' },
         { match: 'jellyfin', label: 'Jellyfin', brand: 'jellyfin' },
         { match: 'nrk', label: 'NRK TV' },
         { match: '^tv ?2\\b', label: 'TV 2 Play' },
@@ -28,7 +27,8 @@ window.LAUNCHER_CONFIG = {
 
     inputs: [
         { hdmi: 2, label: 'PlayStation 5', brand: 'playstation' },
-        { hdmi: 4, label: 'Xbox Series X', brand: 'xbox' }
+        { hdmi: 3, label: 'Xbox Series X', brand: 'xbox' },
+        { hdmi: 4, label: 'Chromecast', brand: 'chromecast' }
     ],
 
     // How an input tile switches the TV. See README "HDMI inputs".

@@ -26,7 +26,6 @@
         app('MovistarPl.MovistarPlus', 'Movistar Plus+'),
         app('PlexMedia0.Plex', 'Plex'),
         app('AprZAARz4r.Jellyfin', 'Jellyfin'),
-        app('ChromeCast0.Chromecast', 'Chromecast'),
         app('NrkTvApp00.NRKTV', 'NRK TV'),
         app('Tv2PlayApp.TV2Play', 'TV 2 Play'),
         app('HboMaxApp0.HBOMax', 'HBO Max'),
