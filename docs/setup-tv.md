@@ -43,9 +43,11 @@ Jellyfin2Samsung; it is the same program). Pick **Custom WGT** in the Release li
 `dist/arn0-launcher.wgt`, select the TV and install. The first time it opens a Samsung account
 sign-in to create a free developer certificate for your TV.
 
-Keep using the same copy of the program for updates, so every version is signed with the same
-certificate. The program re-signs the file in `dist/` in place and may delete it afterwards; just
-build again.
+The program makes a fresh certificate on each run and therefore updates by **uninstalling the
+launcher and installing it again**, which clears the settings saved on the TV. If it fails to
+notice the existing install, the TV refuses the new package with "Author certificate not match":
+remove **Hjem** from the TV's app list (Apps → App Settings → Hjem → Delete) and install again.
+The program re-signs the file in `dist/` in place and may delete it afterwards; just build again.
 
 Then open **Hjem** from the TV's app list.
 

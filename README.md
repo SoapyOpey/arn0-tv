@@ -128,7 +128,8 @@ docs/                 setup guide
 
 ### Settings
 
-Saved on the TV in `localStorage`. They survive restarts and in-place updates, not an uninstall.
+Saved on the TV in `localStorage`. They survive restarts, not an uninstall — and Apps2Samsung
+updates by uninstalling and reinstalling, so note down what you changed before updating.
 
 - **Background** — Off (plain gradient), one photo, or rotate: on each Home, 30 s, 5 min, 15 min,
   1 hour, daily.
