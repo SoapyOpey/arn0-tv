@@ -17,6 +17,7 @@ window.LAUNCHER_CONFIG = {
         { id: 'rJeHak5zRg.Spotify', label: 'Spotify' },
         { id: 'Jz7aUrV2Q4.Twitch', label: 'Twitch' },
         { id: 'E0P3lRI4H7.MYTF1', label: 'TF1+' },
+        { match: 'jellyfin', label: 'Jellyfin', brand: 'jellyfin' },
         { id: 'org.tizen.netflix-app', label: 'Netflix' },
         { id: 'org.tizen.primevideo', label: 'Prime Video' },
         { id: 'MCmYXNxgcu.DisneyPlus', label: 'Disney+' },
