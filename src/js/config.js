@@ -13,19 +13,20 @@
  */
 window.LAUNCHER_CONFIG = {
     apps: [
-        { id: 'xvvl3S1TT1.TizenTubeStandalone', label: 'YouTube', brand: 'youtube' },
-        { id: 'rJeHak5zRg.Spotify', label: 'Spotify' },
-        { id: 'Jz7aUrV2Q4.Twitch', label: 'Twitch' },
-        { id: 'E0P3lRI4H7.MYTF1', label: 'TF1+' },
+        { match: 'chromecast', label: 'Chromecast' },
         { match: 'jellyfin', label: 'Jellyfin', brand: 'jellyfin' },
+        { match: 'nrk', label: 'NRK TV' },
+        { match: '^tv ?2\\b', label: 'TV 2 Play' },
         { id: 'org.tizen.netflix-app', label: 'Netflix' },
+        { match: 'hbo|^max$', label: 'HBO Max', brand: 'max' },
         { id: 'org.tizen.primevideo', label: 'Prime Video' },
+        { match: 'viaplay', label: 'Viaplay' },
         { id: 'MCmYXNxgcu.DisneyPlus', label: 'Disney+' },
-        { id: 'com.samsung.tv.aria-video', label: 'Apple TV' }
+        { id: 'com.samsung.tv.aria-video', label: 'Apple TV' },
+        { match: 'youtube|tizentube', label: 'YouTube', brand: 'youtube' }
     ],
 
     inputs: [
-        { hdmi: 1, label: 'Nintendo Switch 2', brand: 'switch' },
         { hdmi: 2, label: 'PlayStation 5', brand: 'playstation' },
         { hdmi: 4, label: 'Xbox Series X', brand: 'xbox' }
     ],
